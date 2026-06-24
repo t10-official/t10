@@ -9,11 +9,11 @@
 
 body{
     margin:0;
+    padding:40px;
     font-family:Arial,sans-serif;
     background:#111827;
     color:white;
     min-height:100vh;
-    padding:40px;
 }
 
 .container{
@@ -31,10 +31,11 @@ body{
 .subtitle{
     font-size:20px;
     margin-top:10px;
+    margin-bottom:25px;
 }
 
 .button{
-    margin-top:30px;
+    margin-top:15px;
     padding:15px 30px;
     border:none;
     border-radius:10px;
@@ -44,6 +45,60 @@ body{
     cursor:pointer;
 }
 
+.cards{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:#1f2937;
+    padding:20px;
+    border-radius:15px;
+    width:220px;
+    cursor:pointer;
+}
+
+.panel{
+    margin-top:30px;
+    background:#1f2937;
+    padding:25px;
+    border-radius:15px;
+    max-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+input{
+    padding:10px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+}
+
+.save-btn{
+    padding:12px 20px;
+    background:#D4AF37;
+    color:black;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#moodPanel{
+    display:none;
+}
+
+.moods{
+    font-size:40px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
 </style>
 </head>
 
@@ -51,9 +106,7 @@ body{
 
 <div class="container">
 
-<div class="logo">
-T10
-</div>
+<div class="logo">T10</div>
 
 <div class="subtitle">
 Takip Et • Analiz Et • Geliş
@@ -62,39 +115,31 @@ Takip Et • Analiz Et • Geliş
 <button class="button">
 Sisteme Giriş
 </button>
-<div style="margin-top:40px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
 
-<div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
-<div
-onclick="toggleMood()"
-style="background:#1f2937;padding:20px;border-radius:15px;width:180px;cursor:pointer;"
->
+<div class="cards">
 
+<div class="card" onclick="toggleMood()">
 <h3>😄 Ruh Hali</h3>
 <p>Bugünkü durumunu kaydet.</p>
-
 </div>
 
-<div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
+<div class="card">
 <h3>📚 Soru Takibi</h3>
 <p>Günlük soru hedeflerini izle.</p>
 </div>
 
-<div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
+<div class="card">
 <h3>🆘 Yardım Talebi</h3>
 <p>Koçuna sessiz destek talebi gönder.</p>
 </div>
 
 </div>
-</div>
-<div style="margin-top:40px;background:#1f2937;padding:25px;border-radius:15px;max-width:700px;margin-left:auto;margin-right:auto;">
+
+<div id="moodPanel" class="panel">
 
 <h2>Bugün Nasılsın?</h2>
 
-<div
-id="moodPanel"
-style="display:none;margin-top:40px;background:#1f2937;padding:25px;border-radius:15px;max-width:700px;margin-left:auto;margin-right:auto;"
->
+<div class="moods">
 <span onclick="selectMood('Harika')">😄</span>
 <span onclick="selectMood('İyi')">🙂</span>
 <span onclick="selectMood('Normal')">😐</span>
@@ -102,45 +147,31 @@ style="display:none;margin-top:40px;background:#1f2937;padding:25px;border-radiu
 <span onclick="selectMood('Çok Kötü')">😢</span>
 </div>
 
-<p id="moodResult" style="margin-top:20px;font-size:18px;">
+<p id="moodResult">
 Henüz seçim yapılmadı.
 </p>
 
 </div>
-</body>
-</html>
-<script>
 
-function selectMood(mood){
-    document.getElementById("moodResult").innerText =
-    "Bugünkü ruh halin: " + mood;
-
-</script>
-
-<div style="margin-top:40px;background:#1f2937;padding:25px;border-radius:15px;max-width:700px;margin-left:auto;margin-right:auto;">
+<div class="panel">
 
 <h2>Günlük Takip</h2>
 
 <input
 id="studyHours"
 type="number"
-placeholder="Çalışma Saati"
-style="padding:10px;margin:5px;border-radius:8px;border:none;"
->
+placeholder="Çalışma Saati">
 
 <input
 id="questionCount"
 type="number"
-placeholder="Soru Sayısı"
-style="padding:10px;margin:5px;border-radius:8px;border:none;"
->
+placeholder="Soru Sayısı">
 
 <br><br>
 
 <button
-onclick="saveDailyData()"
-style="padding:12px 20px;background:#D4AF37;color:black;border:none;border-radius:8px;font-weight:bold;"
->
+class="save-btn"
+onclick="saveDailyData()">
 Kaydet
 </button>
 
@@ -149,9 +180,30 @@ Henüz veri girilmedi.
 </p>
 
 </div>
-</body>
-</html>
+
+</div>
+
 <script>
+
+function toggleMood(){
+
+    const panel =
+    document.getElementById("moodPanel");
+
+    if(panel.style.display === "none" || panel.style.display === ""){
+        panel.style.display = "block";
+    }else{
+        panel.style.display = "none";
+    }
+
+}
+
+function selectMood(mood){
+
+    document.getElementById("moodResult").innerText =
+    "Bugünkü ruh halin: " + mood;
+
+}
 
 function saveDailyData(){
 
@@ -167,6 +219,10 @@ function saveDailyData(){
     " saat çalışma, " +
     questions +
     " soru.";
+
 }
 
 </script>
+
+</body>
+</html>
