@@ -119,9 +119,36 @@ input, textarea{
 Takip Et • Analiz Et • Geliş
 </div>
 
-<button class="button">
-Sisteme Giriş
+<div id="loginBox" style="max-width:400px;margin:30px auto;background:#1f2937;padding:25px;border-radius:15px;">
+
+<h2>T10 Giriş</h2>
+
+<input
+id="username"
+type="text"
+placeholder="Kullanıcı Adı"
+style="width:90%;padding:12px;margin:8px;border-radius:8px;border:none;">
+
+<input
+id="password"
+type="password"
+placeholder="Şifre"
+style="width:90%;padding:12px;margin:8px;border-radius:8px;border:none;">
+
+<br><br>
+
+<button class="save-btn" onclick="registerUser()">
+Kayıt Ol
 </button>
+
+<button class="save-btn" onclick="loginUser()">
+Giriş Yap
+</button>
+
+<p id="loginMessage"></p>
+
+</div>
+
 
 <div class="cards">
 
@@ -338,6 +365,59 @@ function sendHelp(){
 
 document.getElementById("helpResult").innerText =
 "✅ Talebiniz gönderildi.";
+
+}
+function registerUser(){
+
+```
+const username =
+document.getElementById("username").value;
+
+const password =
+document.getElementById("password").value;
+
+localStorage.setItem(
+    "t10User",
+    JSON.stringify({
+        username: username,
+        password: password
+    })
+);
+
+document.getElementById("loginMessage").innerText =
+"✅ Kayıt oluşturuldu.";
+```
+
+}
+
+function loginUser(){
+
+```
+const username =
+document.getElementById("username").value;
+
+const password =
+document.getElementById("password").value;
+
+const user =
+JSON.parse(localStorage.getItem("t10User"));
+
+if(
+    user &&
+    user.username === username &&
+    user.password === password
+){
+
+    document.getElementById("loginMessage").innerText =
+    "✅ Giriş başarılı.";
+
+}else{
+
+    document.getElementById("loginMessage").innerText =
+    "❌ Kullanıcı adı veya şifre hatalı.";
+
+}
+```
 
 }
 
