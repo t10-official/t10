@@ -14,7 +14,6 @@ body{
     font-family:Arial,sans-serif;
     background:#111827;
     color:white;
-    min-height:100vh;
 }
 
 .container{
@@ -36,7 +35,6 @@ body{
 }
 
 .button{
-    margin-top:15px;
     padding:15px 30px;
     border:none;
     border-radius:10px;
@@ -68,6 +66,7 @@ body{
 }
 
 .panel{
+    display:none;
     margin-top:30px;
     background:#1f2937;
     padding:25px;
@@ -75,10 +74,9 @@ body{
     max-width:700px;
     margin-left:auto;
     margin-right:auto;
-    display:none;
 }
 
-input{
+input, textarea{
     padding:10px;
     margin:5px;
     border:none;
@@ -91,8 +89,8 @@ input{
     color:black;
     border:none;
     border-radius:8px;
-    font-weight:bold;
     cursor:pointer;
+    font-weight:bold;
 }
 
 .moods{
@@ -141,7 +139,15 @@ Sisteme Giriş
 <h3>🆘 Yardım Talebi</h3>
 <p>Koçuna sessiz destek talebi gönder.</p>
 </div>
+
 <div class="card" onclick="toggleStats()">
+<h3>📈 İstatistikler</h3>
+<p>Performansını görüntüle.</p>
+</div>
+
+</div>
+
+<div id="moodPanel" class="panel">
 
 <h2>Bugün Nasılsın?</h2>
 
@@ -153,9 +159,7 @@ Sisteme Giriş
 <span onclick="selectMood('Çok Kötü')">😢</span>
 </div>
 
-<p id="moodResult">
-Henüz seçim yapılmadı.
-</p>
+<p id="moodResult">Henüz seçim yapılmadı.</p>
 
 </div>
 
@@ -163,26 +167,17 @@ Henüz seçim yapılmadı.
 
 <h2>Günlük Takip</h2>
 
-<input
-id="studyHours"
-type="number"
-placeholder="Çalışma Saati">
+<input id="studyHours" type="number" placeholder="Çalışma Saati">
 
-<input
-id="questionCount"
-type="number"
-placeholder="Soru Sayısı">
+<input id="questionCount" type="number" placeholder="Soru Sayısı">
 
 <br><br>
 
-<button
-class="save-btn"
-onclick="saveDailyData()">
-Kaydet </button>
+<button class="save-btn" onclick="saveDailyData()">
+Kaydet
+</button>
 
-<p id="dailyResult">
-Henüz veri girilmedi.
-</p>
+<p id="dailyResult">Henüz veri girilmedi.</p>
 
 <h3>Kayıt Geçmişi</h3>
 
@@ -194,74 +189,28 @@ Henüz veri girilmedi.
 
 <h2>🆘 Yardım Talebi</h2>
 
-<p>
-Aşağıdaki konulardan ihtiyacın olanları seçebilirsin.
-</p>
+<label><input type="checkbox"> Motivasyon Desteği</label><br><br> <label><input type="checkbox"> Ders Programı Oluşturma</label><br><br> <label><input type="checkbox"> Sınav Kaygısı</label><br><br> <label><input type="checkbox"> Verimsizlik Hissediyorum</label><br><br>
 
-<div style="text-align:left;max-width:400px;margin:20px auto;">
+<textarea id="helpNote" placeholder="Eklemek istediğin not..." style="width:90%;height:100px;"></textarea>
 
-<label><input type="checkbox"> Motivasyon Desteği</label> <br><br>
+<br><br>
 
-<label><input type="checkbox"> Ders Programı Oluşturma</label> <br><br>
-
-<label><input type="checkbox"> Sınav Kaygısı</label> <br><br>
-
-<label><input type="checkbox"> Verimsizlik Hissediyorum</label> <br><br>
-
-<label><input type="checkbox"> Koçla Görüşmek İstiyorum</label>
-
-</div>
-<div id="helpPanel" class="panel">
-
-...
+<button class="save-btn" onclick="sendHelp()">
+Talebi Gönder
+</button>
 
 <p id="helpResult"></p>
 
 </div>
-
-<!-- BURAYA EKLE -->
 
 <div id="statsPanel" class="panel">
 
 <h2>📈 İstatistikler</h2>
 
-<p id="totalHours">
-Toplam Çalışma: 0 Saat
-</p>
-
-<p id="totalQuestions">
-Toplam Soru: 0
-</p>
-
-<p id="averageQuestions">
-Ortalama Soru: 0
-</p>
-
-<p id="totalDays">
-Toplam Kayıt: 0 Gün
-</p>
-
-</div>
-
-</div>
-<textarea
-id="helpNote"
-placeholder="Eklemek istediğin not..."
-style="width:90%;height:100px;padding:10px;border-radius:10px;border:none;">
-</textarea>
-
-<br><br>
-
-<button
-class="save-btn"
-onclick="sendHelp()">
-Talebi Gönder </button>
-
-<p id="helpResult"></p>
-
-</div>
-
-<p id="helpResult"></p>
+<p id="totalHours">Toplam Çalışma: 0 Saat</p>
+<p id="totalQuestions">Toplam Soru: 0</p>
+<p id="averageQuestions">Ortalama Soru: 0</p>
+<p id="totalDays">Toplam Kayıt: 0 Gün</p>
 
 </div>
 
@@ -270,101 +219,60 @@ Talebi Gönder </button>
 <script>
 
 function toggleMood(){
-
-const panel =
-document.getElementById("moodPanel");
-
-panel.style.display =
-panel.style.display === "block"
-? "none"
-: "block";
-
+document.getElementById("moodPanel").style.display =
+document.getElementById("moodPanel").style.display === "block" ? "none" : "block";
 }
 
 function toggleStudy(){
-
-const panel =
-document.getElementById("studyPanel");
-
-panel.style.display =
-panel.style.display === "block"
-? "none"
-: "block";
-
+document.getElementById("studyPanel").style.display =
+document.getElementById("studyPanel").style.display === "block" ? "none" : "block";
 }
 
 function toggleHelp(){
-
-const panel =
-document.getElementById("helpPanel");
-
-panel.style.display =
-panel.style.display === "block"
-? "none"
-: "block";
-
+document.getElementById("helpPanel").style.display =
+document.getElementById("helpPanel").style.display === "block" ? "none" : "block";
 }
 
 function toggleStats(){
-
-const panel =
-document.getElementById("statsPanel");
-
-panel.style.display =
-panel.style.display === "block"
-? "none"
-: "block";
-
+document.getElementById("statsPanel").style.display =
+document.getElementById("statsPanel").style.display === "block" ? "none" : "block";
 calculateStats();
-
 }
 
 function selectMood(mood){
-
 document.getElementById("moodResult").innerText =
 "Bugünkü ruh halin: " + mood;
-
 }
 
 function saveDailyData(){
 
-const hours =
-document.getElementById("studyHours").value;
+const hours = document.getElementById("studyHours").value;
+const questions = document.getElementById("questionCount").value;
 
-const questions =
-document.getElementById("questionCount").value;
-
-if(hours === "" || questions === ""){
-    return;
+if(hours==="" || questions===""){
+return;
 }
 
-const today =
-new Date().toLocaleDateString("tr-TR");
-
-const record = {
-    date: today,
-    hours: hours,
-    questions: questions
-};
+const today = new Date().toLocaleDateString("tr-TR");
 
 const records =
-JSON.parse(localStorage.getItem("t10Records"))
-|| [];
+JSON.parse(localStorage.getItem("t10Records")) || [];
 
-records.unshift(record);
+records.unshift({
+date:today,
+hours:hours,
+questions:questions
+});
 
 localStorage.setItem(
-    "t10Records",
-    JSON.stringify(records)
+"t10Records",
+JSON.stringify(records)
 );
 
 loadRecords();
 
 document.getElementById("dailyResult").innerText =
 "✅ Kaydedildi.";
-
-document.getElementById("studyHours").value = "";
-document.getElementById("questionCount").value = "";
 
 }
 
@@ -373,27 +281,22 @@ function loadRecords(){
 const history =
 document.getElementById("historyList");
 
-if(!history){
-    return;
-}
-
 const records =
-JSON.parse(localStorage.getItem("t10Records"))
-|| [];
+JSON.parse(localStorage.getItem("t10Records")) || [];
 
 history.innerHTML = "";
 
 records.forEach(record => {
 
-    history.innerHTML +=
-    '<div class="history-item">' +
-    record.date +
-    ' - ' +
-    record.hours +
-    ' saat - ' +
-    record.questions +
-    ' soru' +
-    '</div>';
+history.innerHTML +=
+'<div class="history-item">' +
+record.date +
+' - ' +
+record.hours +
+' saat - ' +
+record.questions +
+' soru' +
+'</div>';
 
 });
 
@@ -402,17 +305,14 @@ records.forEach(record => {
 function calculateStats(){
 
 const records =
-JSON.parse(localStorage.getItem("t10Records"))
-|| [];
+JSON.parse(localStorage.getItem("t10Records")) || [];
 
 let totalHours = 0;
 let totalQuestions = 0;
 
 records.forEach(record => {
-
-    totalHours += Number(record.hours);
-    totalQuestions += Number(record.questions);
-
+totalHours += Number(record.hours);
+totalQuestions += Number(record.questions);
 });
 
 const average =
@@ -437,14 +337,12 @@ document.getElementById("totalDays").innerText =
 function sendHelp(){
 
 document.getElementById("helpResult").innerText =
-"✅ Talebiniz koçunuza iletildi.";
+"✅ Talebiniz gönderildi.";
 
 }
 
 window.onload = function(){
-
 loadRecords();
-
 };
 
 </script>
