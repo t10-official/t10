@@ -150,7 +150,7 @@ Giriş Yap
 </div>
 
 
-<div class="cards">
+<div class="cards" id="mainApp" style="display:none;">
 
 <div class="card" onclick="toggleMood()">
 <h3>😄 Ruh Hali</h3>
@@ -409,17 +409,18 @@ function loginUser(){
         document.getElementById("loginMessage").innerText =
         "✅ Giriş başarılı.";
 
+        document.getElementById("loginBox").style.display =
+        "none";
+
+        document.getElementById("mainApp").style.display =
+        "flex";
+
     }else{
 
         document.getElementById("loginMessage").innerText =
         "❌ Kullanıcı adı veya şifre hatalı.";
 
-    }
 
-}
-:::
-
-}
 
 window.onload = function(){
 loadRecords();
