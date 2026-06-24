@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -59,6 +60,11 @@ body{
     border-radius:15px;
     width:220px;
     cursor:pointer;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
 }
 
 .panel{
@@ -69,6 +75,7 @@ body{
     max-width:700px;
     margin-left:auto;
     margin-right:auto;
+    display:none;
 }
 
 input{
@@ -88,10 +95,6 @@ input{
     cursor:pointer;
 }
 
-#moodPanel{
-    display:none;
-}
-
 .moods{
     font-size:40px;
     display:flex;
@@ -99,7 +102,13 @@ input{
     gap:20px;
 }
 
+.history-item{
+    padding:10px;
+    border-bottom:1px solid #374151;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -125,10 +134,10 @@ Sisteme Giriş
 
 <div class="card" onclick="toggleStudy()">
 <h3>📚 Soru Takibi</h3>
-<p>Günlük soru hedeflerini izle.</p>
+<p>Çalışma ve soru kayıtları.</p>
 </div>
 
-<div class="card">
+<div class="card" onclick="toggleHelp()">
 <h3>🆘 Yardım Talebi</h3>
 <p>Koçuna sessiz destek talebi gönder.</p>
 </div>
@@ -153,7 +162,8 @@ Henüz seçim yapılmadı.
 
 </div>
 
-<div id="studyPanel" class="panel" style="display:block;">
+<div id="studyPanel" class="panel">
+
 <h2>Günlük Takip</h2>
 
 <input
@@ -171,12 +181,32 @@ placeholder="Soru Sayısı">
 <button
 class="save-btn"
 onclick="saveDailyData()">
-Kaydet
-</button>
+Kaydet </button>
 
 <p id="dailyResult">
 Henüz veri girilmedi.
 </p>
+
+<h3>Kayıt Geçmişi</h3>
+
+<div id="historyList"></div>
+
+</div>
+
+<div id="helpPanel" class="panel">
+
+<h2>🆘 Yardım Talebi</h2>
+
+<p>
+Koçuna sessiz yardım talebi göndermek için aşağıdaki butona bas.
+</p>
+
+<button
+class="save-btn"
+onclick="sendHelp()">
+Yardım İstiyorum </button>
+
+<p id="helpResult"></p>
 
 </div>
 
@@ -189,11 +219,34 @@ function toggleMood(){
     const panel =
     document.getElementById("moodPanel");
 
-    if(panel.style.display === "none" || panel.style.display === ""){
-        panel.style.display = "block";
-    }else{
-        panel.style.display = "none";
-    }
+    panel.style.display =
+    panel.style.display === "block"
+    ? "none"
+    : "block";
+
+}
+
+function toggleStudy(){
+
+    const panel =
+    document.getElementById("studyPanel");
+
+    panel.style.display =
+    panel.style.display === "block"
+    ? "none"
+    : "block";
+
+}
+
+function toggleHelp(){
+
+    const panel =
+    document.getElementById("helpPanel");
+
+    panel.style.display =
+    panel.style.display === "block"
+    ? "none"
+    : "block";
 
 }
 
@@ -212,6 +265,10 @@ function saveDailyData(){
     const questions =
     document.getElementById("questionCount").value;
 
+    if(hours === "" || questions === ""){
+        return;
+    }
+
     document.getElementById("dailyResult").innerText =
     "Kaydedildi: " +
     hours +
@@ -219,19 +276,34 @@ function saveDailyData(){
     questions +
     " soru.";
 
+    const today =
+    new Date().toLocaleDateString("tr-TR");
+
+    const history =
+    document.getElementById("historyList");
+
+    history.innerHTML =
+    '<div class="history-item">' +
+    today +
+    ' - ' +
+    hours +
+    ' saat - ' +
+    questions +
+    ' soru' +
+    '</div>'
+    +
+    history.innerHTML;
+
 }
 
-function toggleStudy(){
+function sendHelp(){
 
-    const panel =
-    document.getElementById("studyPanel");
-
-    if(panel.style.display === "none" || panel.style.display === ""){
-        panel.style.display = "block";
-    }else{
-        panel.style.display = "none";
-    }
+    document.getElementById("helpResult").innerText =
+    "Talebiniz koçunuza iletildi.";
 
 }
+
+</script>
+
 </body>
 </html>
