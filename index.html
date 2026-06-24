@@ -302,6 +302,9 @@ panel.style.display =
 panel.style.display === "block"
 ? "none"
 : "block";
+
+}
+
 function toggleStats(){
 
 const panel =
@@ -313,7 +316,6 @@ panel.style.display === "block"
 : "block";
 
 calculateStats();
-
 
 }
 
@@ -397,6 +399,41 @@ records.forEach(record => {
 
 }
 
+function calculateStats(){
+
+const records =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+let totalHours = 0;
+let totalQuestions = 0;
+
+records.forEach(record => {
+
+    totalHours += Number(record.hours);
+    totalQuestions += Number(record.questions);
+
+});
+
+const average =
+records.length > 0
+? Math.round(totalQuestions / records.length)
+: 0;
+
+document.getElementById("totalHours").innerText =
+"Toplam Çalışma: " + totalHours + " Saat";
+
+document.getElementById("totalQuestions").innerText =
+"Toplam Soru: " + totalQuestions;
+
+document.getElementById("averageQuestions").innerText =
+"Ortalama Soru: " + average;
+
+document.getElementById("totalDays").innerText =
+"Toplam Kayıt: " + records.length + " Gün";
+
+}
+
 function sendHelp(){
 
 document.getElementById("helpResult").innerText =
@@ -409,7 +446,6 @@ window.onload = function(){
 loadRecords();
 
 };
-
 
 </script>
 
