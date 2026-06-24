@@ -71,7 +71,18 @@ Sisteme Giriş
 onclick="toggleMood()"
 style="background:#1f2937;padding:20px;border-radius:15px;width:180px;cursor:pointer;"
 >
+function toggleMood(){
 
+    const panel =
+    document.getElementById("moodPanel");
+
+    if(panel.style.display === "none"){
+        panel.style.display = "block";
+    }else{
+        panel.style.display = "none";
+    }
+
+}
 <div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
 <h3>📚 Soru Takibi</h3>
 <p>Günlük soru hedeflerini izle.</p>
