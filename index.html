@@ -105,11 +105,9 @@ Henüz seçim yapılmadı.
 function selectMood(mood){
     document.getElementById("moodResult").innerText =
     "Bugünkü ruh halin: " + mood;
-}
 
 </script>
 
-}
 <div style="margin-top:40px;background:#1f2937;padding:25px;border-radius:15px;max-width:700px;margin-left:auto;margin-right:auto;">
 
 <h2>Günlük Takip</h2>
@@ -142,3 +140,27 @@ Henüz veri girilmedi.
 </p>
 
 </div>
+</body>
+</html>
+<script>
+
+function saveDailyData(){
+
+    const hours =
+    document.getElementById("studyHours").value;
+
+    const questions =
+    document.getElementById("questionCount").value;
+
+    document.getElementById("dailyResult").innerText =
+    "Kaydedildi: " +
+    hours +
+    " saat çalışma, " +
+    questions +
+    " soru.";
+}
+
+</script>
+
+</body>
+</html>
