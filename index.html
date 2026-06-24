@@ -1,169 +1,120 @@
 <!DOCTYPE html>
-
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>T10</title>
-
+<title>T10 v2.0</title>
 <style>
-body{
-    background:#111827;
-    color:white;
-    font-family:Arial,sans-serif;
-    text-align:center;
-    padding:40px;
-}
-
-.logo{
-    font-size:70px;
-    font-weight:bold;
-    color:#D4AF37;
-}
-
-.login-box{
-    background:#1f2937;
-    max-width:400px;
-    margin:30px auto;
-    padding:25px;
-    border-radius:15px;
-}
-
-input{
-    width:90%;
-    padding:12px;
-    margin:8px;
-    border:none;
-    border-radius:8px;
-}
-
-button{
-    background:#D4AF37;
-    color:black;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-#mainApp{
-    display:none;
-}
-
-.card{
-    display:inline-block;
-    width:220px;
-    background:#1f2937;
-    margin:10px;
-    padding:20px;
-    border-radius:15px;
-}
+body{margin:0;padding:30px;background:#111827;color:white;font-family:Arial}
+.logo{text-align:center;font-size:64px;color:#D4AF37;font-weight:bold}
+.sub{text-align:center;margin-bottom:20px}
+.login,.panel{background:#1f2937;padding:20px;border-radius:12px;max-width:700px;margin:20px auto}
+.cards{display:none;justify-content:center;gap:15px;flex-wrap:wrap}
+.card{background:#1f2937;padding:20px;border-radius:12px;width:200px;cursor:pointer;text-align:center}
+input,textarea{width:90%;padding:10px;margin:5px;border-radius:8px;border:none}
+button{padding:10px 15px;border:none;border-radius:8px;background:#D4AF37;cursor:pointer}
+.hidden{display:none}
 </style>
-
 </head>
-
 <body>
 
 <div class="logo">T10</div>
+<div class="sub">Takip Et • Analiz Et • Geliş</div>
 
-<h3>Takip Et • Analiz Et • Geliş</h3>
-
-<div id="loginBox" class="login-box">
-
+<div id="loginBox" class="login">
 <h2>Giriş</h2>
-
 <input id="username" placeholder="Kullanıcı Adı">
-
 <input id="password" type="password" placeholder="Şifre">
-
 <br><br>
-
 <button onclick="registerUser()">Kayıt Ol</button>
-
 <button onclick="loginUser()">Giriş Yap</button>
-
 <p id="loginMessage"></p>
-
 </div>
 
-<div id="mainApp">
-
-<h2>Hoş Geldin</h2>
-
-<div class="card">
-😄 Ruh Hali
+<div id="cards" class="cards">
+<div class="card" onclick="togglePanel('moodPanel')">😄 Ruh Hali</div>
+<div class="card" onclick="togglePanel('studyPanel')">📚 Soru Takibi</div>
+<div class="card" onclick="togglePanel('helpPanel')">🆘 Yardım</div>
+<div class="card" onclick="showStats()">📈 İstatistikler</div>
+<div class="card" onclick="logoutUser()">🚪 Çıkış</div>
 </div>
 
-<div class="card">
-📚 Soru Takibi
+<div id="moodPanel" class="panel hidden">
+<h2>Ruh Hali</h2>
+<button onclick="setMood('Harika')">😄</button>
+<button onclick="setMood('İyi')">🙂</button>
+<button onclick="setMood('Normal')">😐</button>
+<button onclick="setMood('Kötü')">😔</button>
+<p id="moodResult"></p>
 </div>
 
-<div class="card">
-🆘 Yardım Talebi
+<div id="studyPanel" class="panel hidden">
+<h2>Soru Takibi</h2>
+<input id="hours" type="number" placeholder="Çalışma Saati">
+<input id="questions" type="number" placeholder="Soru Sayısı">
+<button onclick="saveStudy()">Kaydet</button>
+<p id="studyResult"></p>
+<div id="history"></div>
 </div>
 
-<div class="card">
-📈 İstatistikler
+<div id="helpPanel" class="panel hidden">
+<h2>Yardım Talebi</h2>
+<textarea id="helpText" rows="4" placeholder="Notun"></textarea><br>
+<button onclick="sendHelp()">Gönder</button>
+<p id="helpResult"></p>
 </div>
 
+<div id="statsPanel" class="panel hidden">
+<h2>İstatistikler</h2>
+<p id="statsText"></p>
 </div>
 
 <script>
-
 function registerUser(){
-
-    const username =
-    document.getElementById("username").value;
-
-    const password =
-    document.getElementById("password").value;
-
-    localStorage.setItem(
-        "t10User",
-        JSON.stringify({
-            username: username,
-            password: password
-        })
-    );
-
-    document.getElementById("loginMessage").innerText =
-    "✅ Kayıt oluşturuldu.";
-
+ const u=username.value,p=password.value;
+ localStorage.setItem('t10User',JSON.stringify({u,p}));
+ loginMessage.innerText='Kayıt oluşturuldu';
 }
-
 function loginUser(){
-
-    const username =
-    document.getElementById("username").value;
-
-    const password =
-    document.getElementById("password").value;
-
-    const user =
-    JSON.parse(localStorage.getItem("t10User"));
-
-    if(
-        user &&
-        user.username === username &&
-        user.password === password
-    ){
-
-        document.getElementById("loginBox").style.display =
-        "none";
-
-        document.getElementById("mainApp").style.display =
-        "block";
-
-    }else{
-
-        document.getElementById("loginMessage").innerText =
-        "❌ Hatalı giriş.";
-
-    }
-
+ const u=username.value,p=password.value;
+ const user=JSON.parse(localStorage.getItem('t10User'));
+ if(user && user.u===u && user.p===p){
+   loginBox.style.display='none';
+   cards.style.display='flex';
+ } else loginMessage.innerText='Bilgiler hatalı';
 }
-
+function logoutUser(){
+ cards.style.display='none';
+ loginBox.style.display='block';
+}
+function togglePanel(id){
+ const p=document.getElementById(id);
+ p.classList.toggle('hidden');
+}
+function setMood(m){
+ localStorage.setItem('t10Mood',m);
+ moodResult.innerText='Bugünkü ruh halin: '+m;
+}
+function saveStudy(){
+ let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
+ arr.unshift({d:new Date().toLocaleDateString('tr-TR'),h:hours.value,q:questions.value});
+ localStorage.setItem('t10Records',JSON.stringify(arr));
+ studyResult.innerText='Kaydedildi';
+ loadHistory();
+}
+function loadHistory(){
+ let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
+ history.innerHTML=arr.map(x=>`<p>${x.d} - ${x.h} saat - ${x.q} soru</p>`).join('');
+}
+function showStats(){
+ togglePanel('statsPanel');
+ let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
+ let h=0,q=0;
+ arr.forEach(x=>{h+=Number(x.h||0);q+=Number(x.q||0)});
+ statsText.innerText=`Toplam Saat: ${h} | Toplam Soru: ${q} | Kayıt: ${arr.length}`;
+}
+function sendHelp(){ helpResult.innerText='Talep gönderildi'; }
+window.onload=loadHistory;
 </script>
 
 </body>
