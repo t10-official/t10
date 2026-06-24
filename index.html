@@ -367,57 +367,57 @@ document.getElementById("helpResult").innerText =
 "✅ Talebiniz gönderildi.";
 
 }
+:::writing{variant="document" id="52817"}
 function registerUser(){
 
-```
-const username =
-document.getElementById("username").value;
+    const username =
+    document.getElementById("username").value;
 
-const password =
-document.getElementById("password").value;
+    const password =
+    document.getElementById("password").value;
 
-localStorage.setItem(
-    "t10User",
-    JSON.stringify({
-        username: username,
-        password: password
-    })
-);
+    localStorage.setItem(
+        "t10User",
+        JSON.stringify({
+            username: username,
+            password: password
+        })
+    );
 
-document.getElementById("loginMessage").innerText =
-"✅ Kayıt oluşturuldu.";
-```
+    document.getElementById("loginMessage").innerText =
+    "✅ Kayıt oluşturuldu.";
 
 }
 
 function loginUser(){
 
-```
-const username =
-document.getElementById("username").value;
+    const username =
+    document.getElementById("username").value;
 
-const password =
-document.getElementById("password").value;
+    const password =
+    document.getElementById("password").value;
 
-const user =
-JSON.parse(localStorage.getItem("t10User"));
+    const user =
+    JSON.parse(localStorage.getItem("t10User"));
 
-if(
-    user &&
-    user.username === username &&
-    user.password === password
-){
+    if(
+        user &&
+        user.username === username &&
+        user.password === password
+    ){
 
-    document.getElementById("loginMessage").innerText =
-    "✅ Giriş başarılı.";
+        document.getElementById("loginMessage").innerText =
+        "✅ Giriş başarılı.";
 
-}else{
+    }else{
 
-    document.getElementById("loginMessage").innerText =
-    "❌ Kullanıcı adı veya şifre hatalı.";
+        document.getElementById("loginMessage").innerText =
+        "❌ Kullanıcı adı veya şifre hatalı.";
+
+    }
 
 }
-```
+:::
 
 }
 
