@@ -67,7 +67,10 @@ Sisteme Giriş
 <div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
 <h3>😄 Ruh Hali</h3>
 <p>Bugünkü durumunu kaydet.</p>
-</div>
+<div
+onclick="toggleMood()"
+style="background:#1f2937;padding:20px;border-radius:15px;width:180px;cursor:pointer;"
+>
 
 <div style="background:#1f2937;padding:20px;border-radius:15px;width:180px;">
 <h3>📚 Soru Takibi</h3>
@@ -85,7 +88,10 @@ Sisteme Giriş
 
 <h2>Bugün Nasılsın?</h2>
 
-<div style="font-size:40px;display:flex;justify-content:center;gap:20px;">
+<div
+id="moodPanel"
+style="display:none;margin-top:40px;background:#1f2937;padding:25px;border-radius:15px;max-width:700px;margin-left:auto;margin-right:auto;"
+>
 <span onclick="selectMood('Harika')">😄</span>
 <span onclick="selectMood('İyi')">🙂</span>
 <span onclick="selectMood('Normal')">😐</span>
@@ -161,6 +167,15 @@ function saveDailyData(){
 }
 
 </script>
+function toggleMood(){
 
-</body>
-</html>
+    const panel =
+    document.getElementById("moodPanel");
+
+    if(panel.style.display === "none"){
+        panel.style.display = "block";
+    }else{
+        panel.style.display = "none";
+    }
+
+}
