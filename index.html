@@ -1,150 +1,170 @@
-from pathlib import Path
+<!DOCTYPE html>
 
-html = """<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>T10 v1.0</title>
+<title>T10</title>
+
 <style>
-body{font-family:Arial;background:#111827;color:white;margin:0;padding:30px;text-align:center}
-.logo{font-size:60px;color:#D4AF37;font-weight:bold}
-.card{background:#1f2937;padding:20px;border-radius:15px;margin:10px;display:inline-block;width:220px;cursor:pointer}
-.panel{display:none;background:#1f2937;padding:20px;border-radius:15px;max-width:700px;margin:20px auto}
-button{background:#D4AF37;border:none;padding:10px 15px;border-radius:8px;cursor:pointer}
-input,textarea{padding:10px;border-radius:8px;border:none;margin:5px}
+body{
+    background:#111827;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    padding:40px;
+}
+
+.logo{
+    font-size:70px;
+    font-weight:bold;
+    color:#D4AF37;
+}
+
+.login-box{
+    background:#1f2937;
+    max-width:400px;
+    margin:30px auto;
+    padding:25px;
+    border-radius:15px;
+}
+
+input{
+    width:90%;
+    padding:12px;
+    margin:8px;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    background:#D4AF37;
+    color:black;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#mainApp{
+    display:none;
+}
+
+.card{
+    display:inline-block;
+    width:220px;
+    background:#1f2937;
+    margin:10px;
+    padding:20px;
+    border-radius:15px;
+}
 </style>
+
 </head>
+
 <body>
 
 <div class="logo">T10</div>
-<p>Takip Et • Analiz Et • Geliş</p>
 
-<div id="loginBox">
+<h3>Takip Et • Analiz Et • Geliş</h3>
+
+<div id="loginBox" class="login-box">
+
 <h2>Giriş</h2>
-<input id="username" placeholder="Kullanıcı Adı"><br>
-<input id="password" type="password" placeholder="Şifre"><br><br>
+
+<input id="username" placeholder="Kullanıcı Adı">
+
+<input id="password" type="password" placeholder="Şifre">
+
+<br><br>
+
 <button onclick="registerUser()">Kayıt Ol</button>
+
 <button onclick="loginUser()">Giriş Yap</button>
+
 <p id="loginMessage"></p>
+
 </div>
 
-<div id="mainApp" style="display:none;">
+<div id="mainApp">
 
-<button onclick="logoutUser()">Çıkış Yap</button>
+<h2>Hoş Geldin</h2>
 
-<div>
-<div class="card" onclick="toggle('moodPanel')">😄 Ruh Hali</div>
-<div class="card" onclick="toggle('studyPanel')">📚 Soru Takibi</div>
-<div class="card" onclick="toggle('helpPanel')">🆘 Yardım</div>
-<div class="card" onclick="showStats()">📈 İstatistik</div>
+<div class="card">
+😄 Ruh Hali
 </div>
 
-<div id="moodPanel" class="panel">
-<h2>Bugün Nasılsın?</h2>
-<button onclick="setMood('Harika')">😄</button>
-<button onclick="setMood('İyi')">🙂</button>
-<button onclick="setMood('Normal')">😐</button>
-<button onclick="setMood('Kötü')">😔</button>
-<p id="moodResult"></p>
+<div class="card">
+📚 Soru Takibi
 </div>
 
-<div id="studyPanel" class="panel">
-<h2>Soru Takibi</h2>
-<input id="hours" type="number" placeholder="Çalışma Saati">
-<input id="questions" type="number" placeholder="Soru Sayısı">
-<button onclick="saveStudy()">Kaydet</button>
-<p id="studyMsg"></p>
-<div id="history"></div>
+<div class="card">
+🆘 Yardım Talebi
 </div>
 
-<div id="helpPanel" class="panel">
-<h2>Yardım Talebi</h2>
-<textarea id="helpText" rows="4" cols="40" placeholder="Notun"></textarea><br>
-<button onclick="sendHelp()">Gönder</button>
-<p id="helpMsg"></p>
-</div>
-
-<div id="statsPanel" class="panel">
-<h2>İstatistikler</h2>
-<p id="stats"></p>
+<div class="card">
+📈 İstatistikler
 </div>
 
 </div>
 
 <script>
-function toggle(id){
- const p=document.getElementById(id);
- p.style.display=p.style.display==="block"?"none":"block";
-}
 
 function registerUser(){
- const u=document.getElementById("username").value;
- const p=document.getElementById("password").value;
- localStorage.setItem("t10User",JSON.stringify({u,p}));
- document.getElementById("loginMessage").innerText="Kayıt oluşturuldu";
+
+    const username =
+    document.getElementById("username").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    localStorage.setItem(
+        "t10User",
+        JSON.stringify({
+            username: username,
+            password: password
+        })
+    );
+
+    document.getElementById("loginMessage").innerText =
+    "✅ Kayıt oluşturuldu.";
+
 }
 
 function loginUser(){
- const u=document.getElementById("username").value;
- const p=document.getElementById("password").value;
- const user=JSON.parse(localStorage.getItem("t10User"));
- if(user && user.u===u && user.p===p){
-   document.getElementById("loginBox").style.display="none";
-   document.getElementById("mainApp").style.display="block";
- }else{
-   document.getElementById("loginMessage").innerText="Bilgiler hatalı";
- }
+
+    const username =
+    document.getElementById("username").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const user =
+    JSON.parse(localStorage.getItem("t10User"));
+
+    if(
+        user &&
+        user.username === username &&
+        user.password === password
+    ){
+
+        document.getElementById("loginBox").style.display =
+        "none";
+
+        document.getElementById("mainApp").style.display =
+        "block";
+
+    }else{
+
+        document.getElementById("loginMessage").innerText =
+        "❌ Hatalı giriş.";
+
+    }
+
 }
 
-function logoutUser(){
- document.getElementById("mainApp").style.display="none";
- document.getElementById("loginBox").style.display="block";
-}
-
-function setMood(m){
- localStorage.setItem("t10Mood",m);
- document.getElementById("moodResult").innerText="Ruh hali: "+m;
-}
-
-function saveStudy(){
- const h=document.getElementById("hours").value;
- const q=document.getElementById("questions").value;
- let arr=JSON.parse(localStorage.getItem("t10Records"))||[];
- arr.unshift({date:new Date().toLocaleDateString("tr-TR"),h,q});
- localStorage.setItem("t10Records",JSON.stringify(arr));
- document.getElementById("studyMsg").innerText="Kaydedildi";
- loadHistory();
-}
-
-function loadHistory(){
- let arr=JSON.parse(localStorage.getItem("t10Records"))||[];
- let html="";
- arr.forEach(x=>html+=`<p>${x.date} - ${x.h} saat - ${x.q} soru</p>`);
- document.getElementById("history").innerHTML=html;
-}
-
-function showStats(){
- toggle('statsPanel');
- let arr=JSON.parse(localStorage.getItem("t10Records"))||[];
- let h=0,q=0;
- arr.forEach(x=>{h+=Number(x.h);q+=Number(x.q);});
- document.getElementById("stats").innerText=
- `Toplam Saat: ${h} | Toplam Soru: ${q} | Kayıt: ${arr.length}`;
-}
-
-function sendHelp(){
- document.getElementById("helpMsg").innerText="Talep gönderildi";
-}
-
-window.onload=function(){
- loadHistory();
-}
 </script>
+
 </body>
 </html>
-"""
-
-path="/mnt/data/T10_v1_0.html"
-Path(path).write_text(html, encoding="utf-8")
-print(path)
