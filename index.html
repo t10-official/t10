@@ -285,44 +285,73 @@ function selectMood(mood){
 
 function saveDailyData(){
 
-    const hours =
-    document.getElementById("studyHours").value;
+```
+const hours =
+document.getElementById("studyHours").value;
 
-    const questions =
-    document.getElementById("questionCount").value;
+const questions =
+document.getElementById("questionCount").value;
 
-    if(hours === "" || questions === ""){
-        return;
-    }
-
-    document.getElementById("dailyResult").innerText =
-    "Kaydedildi: " +
-    hours +
-    " saat çalışma, " +
-    questions +
-    " soru.";
-
-    const today =
-    new Date().toLocaleDateString("tr-TR");
-
-    const history =
-    document.getElementById("historyList");
-
-    history.innerHTML =
-    '<div class="history-item">' +
-    today +
-    ' - ' +
-    hours +
-    ' saat - ' +
-    questions +
-    ' soru' +
-    '</div>'
-    +
-    history.innerHTML;
-
+if(hours === "" || questions === ""){
+    return;
 }
 
+const today =
+new Date().toLocaleDateString("tr-TR");
+
+const record = {
+    date: today,
+    hours: hours,
+    questions: questions
+};
+
+const records =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+records.unshift(record);
+
+localStorage.setItem(
+    "t10Records",
+    JSON.stringify(records)
+);
+
+loadRecords();
+
+document.getElementById("dailyResult").innerText =
+"✅ Kaydedildi.";
+```
+
+
+function loadRecords(){
+
+```
+const history =
+document.getElementById("historyList");
+
+const records =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+history.innerHTML = "";
+
+records.forEach(record => {
+
+    history.innerHTML +=
+    '<div class="history-item">' +
+    record.date +
+    ' - ' +
+    record.hours +
+    ' saat - ' +
+    record.questions +
+    ' soru' +
+    '</div>';
+
+});
+```
+
 function sendHelp(){
+loadRecords();
 
     document.getElementById("helpResult").innerText =
     "Talebiniz koçunuza iletildi.";
