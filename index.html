@@ -242,7 +242,6 @@ Talebi Gönder </button>
 
 function toggleMood(){
 
-```
 const panel =
 document.getElementById("moodPanel");
 
@@ -250,13 +249,11 @@ panel.style.display =
 panel.style.display === "block"
 ? "none"
 : "block";
-```
 
 }
 
 function toggleStudy(){
 
-```
 const panel =
 document.getElementById("studyPanel");
 
@@ -264,13 +261,11 @@ panel.style.display =
 panel.style.display === "block"
 ? "none"
 : "block";
-```
 
 }
 
 function toggleHelp(){
 
-```
 const panel =
 document.getElementById("helpPanel");
 
@@ -278,22 +273,18 @@ panel.style.display =
 panel.style.display === "block"
 ? "none"
 : "block";
-```
 
 }
 
 function selectMood(mood){
 
-```
 document.getElementById("moodResult").innerText =
 "Bugünkü ruh halin: " + mood;
-```
 
 }
 
 function saveDailyData(){
 
-```
 const hours =
 document.getElementById("studyHours").value;
 
@@ -331,13 +322,11 @@ document.getElementById("dailyResult").innerText =
 
 document.getElementById("studyHours").value = "";
 document.getElementById("questionCount").value = "";
-```
 
 }
 
 function loadRecords(){
 
-```
 const history =
 document.getElementById("historyList");
 
@@ -364,24 +353,19 @@ records.forEach(record => {
     '</div>';
 
 });
-```
 
 }
 
 function sendHelp(){
 
-```
 document.getElementById("helpResult").innerText =
 "✅ Talebiniz koçunuza iletildi.";
-```
 
 }
 
 window.onload = function(){
 
-```
 loadRecords();
-```
 
 };
 
