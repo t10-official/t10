@@ -160,29 +160,38 @@ document.getElementById("moodResult").innerText =
 
 }
 
-function saveStudy(){
+async function saveStudy(){
 
-let arr =
-JSON.parse(localStorage.getItem("t10Records"))
-|| [];
+const hours =
+document.getElementById("hours").value;
 
-arr.unshift({
+const questions =
+document.getElementById("questions").value;
 
-d:new Date().toLocaleDateString("tr-TR"),
-h:document.getElementById("hours").value,
-q:document.getElementById("questions").value
+if(!hours || !questions){
+return;
+}
 
-});
+try{
 
-localStorage.setItem(
-"t10Records",
-JSON.stringify(arr)
+await addDoc(
+collection(db,"studyRecords"),
+{
+hours:Number(hours),
+questions:Number(questions),
+date:new Date().toLocaleDateString("tr-TR")
+}
 );
 
 document.getElementById("studyResult").innerText =
-"✅ Kaydedildi";
+"✅ Firebase'e kaydedildi";
 
-loadHistory();
+}catch(error){
+
+document.getElementById("studyResult").innerText =
+error.message;
+
+}
 
 }
 
@@ -244,8 +253,12 @@ createUserWithEmailAndPassword,
 signInWithEmailAndPassword
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+import {
+getFirestore,
+collection,
+addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDPvUaP5Kn3jx4_IoNuOMopiR18n8NIGsU",
   authDomain: "t10v10.firebaseapp.com",
