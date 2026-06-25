@@ -1,325 +1,79 @@
 <!DOCTYPE html>
-
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>T10 v2.1</title>
-
+<title>T10 v2.0</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#111827;
-color:white;
-padding:30px;
-}
-
-.logo{
-text-align:center;
-font-size:72px;
-font-weight:bold;
-color:#D4AF37;
-}
-
-.subtitle{
-text-align:center;
-margin-top:10px;
-margin-bottom:30px;
-font-size:18px;
-}
-
-.panel{
-background:#1f2937;
-padding:25px;
-border-radius:15px;
-max-width:700px;
-margin:20px auto;
-}
-
-input,
-select,
-textarea{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:10px;
-}
-
-button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-background:#D4AF37;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.cards{
-display:none;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-top:30px;
-}
-
-.card{
-width:220px;
-background:#1f2937;
-padding:20px;
-border-radius:15px;
-cursor:pointer;
-text-align:center;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-.hidden{
-display:none;
-}
-
-#history{
-margin-top:20px;
-text-align:left;
-}
-
-.record{
-padding:10px;
-border-bottom:1px solid #374151;
-}
-
+body{margin:0;padding:30px;background:#111827;color:white;font-family:Arial}
+.logo{text-align:center;font-size:64px;color:#D4AF37;font-weight:bold}
+.sub{text-align:center;margin-bottom:20px}
+.login,.panel{background:#1f2937;padding:20px;border-radius:12px;max-width:700px;margin:20px auto}
+.cards{display:none;justify-content:center;gap:15px;flex-wrap:wrap}
+.card{background:#1f2937;padding:20px;border-radius:12px;width:200px;cursor:pointer;text-align:center}
+input,textarea{width:90%;padding:10px;margin:5px;border-radius:8px;border:none}
+button{padding:10px 15px;border:none;border-radius:8px;background:#D4AF37;cursor:pointer}
+.hidden{display:none}
 </style>
-
 </head>
-
 <body>
 
-<div class="logo">
-T10
-</div>
+<div class="logo">T10</div>
+<div class="sub">Takip Et • Analiz Et • Geliş</div>
 
-<div class="subtitle">
-Takip Et • Analiz Et • Geliş
-</div>
-
-<div id="loginBox" class="panel">
-
-<h2>Giriş Yap</h2>
-
-<input
-id="email"
-type="email"
-placeholder="E-Posta">
-
-<input
-id="password"
-type="password"
-placeholder="Şifre">
-
-<select id="role">
-
-<option value="student">
-👨‍🎓 Öğrenci
-</option>
-
-<option value="coach">
-👩‍🏫 Koç
-</option>
-
-</select>
-
-<button onclick="registerUser()">
-Kayıt Ol
-</button>
-
-<button onclick="loginUser()">
-Giriş Yap
-</button>
-
+<div id="loginBox" class="login">
+<h2>Giriş</h2>
+<input id="username" placeholder="Kullanıcı Adı">
+<input id="password" type="password" placeholder="Şifre">
+<br><br>
+<button onclick="registerUser()">Kayıt Ol</button>
+<button onclick="loginUser()">Giriş Yap</button>
 <p id="loginMessage"></p>
-
 </div>
 
 <div id="cards" class="cards">
-
-<div class="card" onclick="togglePanel('moodPanel')">
-😄 Ruh Hali
+<div class="card" onclick="togglePanel('moodPanel')">😄 Ruh Hali</div>
+<div class="card" onclick="togglePanel('studyPanel')">📚 Soru Takibi</div>
+<div class="card" onclick="togglePanel('helpPanel')">🆘 Yardım</div>
+<div class="card" onclick="showStats()">📈 İstatistikler</div>
+<div class="card" onclick="logoutUser()">🚪 Çıkış</div>
 </div>
 
-<div class="card" onclick="togglePanel('studyPanel')">
-📚 Soru Takibi
-</div>
-
-<div class="card" onclick="togglePanel('helpPanel')">
-🆘 Yardım Talebi
-</div>
-
-<div class="card" onclick="togglePanel('statsPanel')">
-📈 İstatistikler
-</div>
-
-<div class="card" onclick="logoutUser()">
-🚪 Çıkış
-</div>
-
-</div>
 <div id="moodPanel" class="panel hidden">
-
-<h2>😄 Ruh Hali</h2>
-
-<p>Bugün nasıl hissediyorsun?</p>
-
-<button onclick="setMood('Harika')">😄 Harika</button>
-
-<button onclick="setMood('İyi')">🙂 İyi</button>
-
-<button onclick="setMood('Normal')">😐 Normal</button>
-
-<button onclick="setMood('Kötü')">😔 Kötü</button>
-
+<h2>Ruh Hali</h2>
+<button onclick="setMood('Harika')">😄</button>
+<button onclick="setMood('İyi')">🙂</button>
+<button onclick="setMood('Normal')">😐</button>
+<button onclick="setMood('Kötü')">😔</button>
 <p id="moodResult"></p>
-
 </div>
 
 <div id="studyPanel" class="panel hidden">
-
-<h2>📚 Günlük Çalışma Takibi</h2>
-
-<input
-id="hours"
-type="number"
-placeholder="Çalışma Saati">
-
-<input
-id="questions"
-type="number"
-placeholder="Çözülen Soru Sayısı">
-
-<button onclick="saveStudy()">
-Kaydet
-</button>
-
+<h2>Soru Takibi</h2>
+<input id="hours" type="number" placeholder="Çalışma Saati">
+<input id="questions" type="number" placeholder="Soru Sayısı">
+<button onclick="saveStudy()">Kaydet</button>
 <p id="studyResult"></p>
-
-<h3>Kayıt Geçmişi</h3>
-
 <div id="history"></div>
-
 </div>
 
 <div id="helpPanel" class="panel hidden">
-
-<h2>🆘 Yardım Talebi</h2>
-
-<textarea
-id="helpText"
-rows="5"
-placeholder="Koçuna göndermek istediğin notu yaz">
-</textarea>
-
-<button onclick="sendHelp()">
-Talebi Gönder
-</button>
-
+<h2>Yardım Talebi</h2>
+<textarea id="helpText" rows="4" placeholder="Notun"></textarea><br>
+<button onclick="sendHelp()">Gönder</button>
 <p id="helpResult"></p>
-
 </div>
 
 <div id="statsPanel" class="panel hidden">
-
-<h2>📈 İstatistikler</h2>
-
-<p id="statsText">
-Henüz veri yok.
-</p>
-
+<h2>İstatistikler</h2>
+<p id="statsText"></p>
 </div>
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-addDoc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-
-apiKey: "BURAYA SENİN API KEY",
-
-authDomain: "BURAYA AUTH DOMAIN",
-
-projectId: "BURAYA PROJECT ID",
-
-storageBucket: "BURAYA STORAGE",
-
-messagingSenderId: "BURAYA SENDER ID",
-
-appId: "BURAYA APP ID"
-
-};
-
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-const db =
-getFirestore(app);
-
-window.auth = auth;
-window.db = db;
-window.collection = collection;
-window.addDoc = addDoc;
-window.signOut = signOut;
-window.createUserWithEmailAndPassword =
-createUserWithEmailAndPassword;
-window.signInWithEmailAndPassword =
-signInWithEmailAndPassword;
-
-console.log("Firebase bağlandı 🚀");
-
-</script>
 
 <script>
-
-function togglePanel(id){
-
-const panel =
-document.getElementById(id);
-
-panel.classList.toggle("hidden");
-
-}
-
 async function registerUser(){
 
 const email =
-document.getElementById("email").value;
+document.getElementById("username").value;
 
 const password =
 document.getElementById("password").value;
@@ -333,7 +87,7 @@ password
 );
 
 document.getElementById("loginMessage").innerText =
-"✅ Hesap oluşturuldu.";
+"✅ Firebase hesabı oluşturuldu.";
 
 }catch(error){
 
@@ -345,169 +99,3 @@ error.message;
 }
 
 async function loginUser(){
-
-const email =
-document.getElementById("email").value;
-
-const password =
-document.getElementById("password").value;
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-document.getElementById("loginBox").style.display =
-"none";
-
-document.getElementById("cards").style.display =
-"flex";
-
-document.getElementById("loginMessage").innerText =
-"✅ Giriş başarılı.";
-
-}catch(error){
-
-document.getElementById("loginMessage").innerText =
-error.message;
-
-}
-
-}
-
-async function logoutUser(){
-
-await signOut(auth);
-
-document.getElementById("cards").style.display =
-"none";
-
-document.getElementById("loginBox").style.display =
-"block";
-
-}
-
-</script>
-function setMood(m){
-
-document.getElementById("moodResult").innerText =
-"Bugünkü ruh halin: " + m;
-
-}
-
-async function saveStudy(){
-
-const hours =
-document.getElementById("hours").value;
-
-const questions =
-document.getElementById("questions").value;
-
-if(!hours || !questions){
-
-document.getElementById("studyResult").innerText =
-"Saat ve soru gir.";
-
-return;
-
-}
-
-try{
-
-await addDoc(
-collection(db,"studyRecords"),
-{
-hours:Number(hours),
-questions:Number(questions),
-date:new Date().toLocaleDateString("tr-TR")
-}
-);
-
-document.getElementById("studyResult").innerText =
-"✅ Firebase'e kaydedildi.";
-
-calculateStats();
-
-}catch(error){
-
-document.getElementById("studyResult").innerText =
-error.message;
-
-}
-
-}
-
-async function sendHelp(){
-
-const text =
-document.getElementById("helpText").value;
-
-if(text === ""){
-
-document.getElementById("helpResult").innerText =
-"Lütfen bir not yaz.";
-
-return;
-
-}
-
-try{
-
-await addDoc(
-collection(db,"helpRequests"),
-{
-message:text,
-date:new Date().toLocaleDateString("tr-TR")
-}
-);
-
-document.getElementById("helpResult").innerText =
-"✅ Talep gönderildi.";
-
-document.getElementById("helpText").value = "";
-
-}catch(error){
-
-document.getElementById("helpResult").innerText =
-error.message;
-
-}
-
-}
-
-function calculateStats(){
-
-const history =
-document.getElementById("history");
-
-const items =
-history.querySelectorAll(".record");
-
-let totalQuestions = 0;
-let totalHours = 0;
-
-items.forEach(item => {
-
-const text = item.innerText;
-
-});
-
-document.getElementById("statsText").innerText =
-"T10 v2.1 aktif. Firebase bağlantısı çalışıyor.";
-
-}
-
-window.onload = function(){
-
-document.getElementById("loginBox").style.display =
-"block";
-
-};
-
-</script>
-
-</body>
-</html>
