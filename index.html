@@ -116,6 +116,28 @@ function showStats(){
 function sendHelp(){ helpResult.innerText='Talep gönderildi'; }
 window.onload=loadHistory;
 </script>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDPvUaP5Kn3jx4_IoNuOMopiR18n8NIGsU",
+  authDomain: "t10v10.firebaseapp.com",
+  projectId: "t10v10",
+  storageBucket: "t10v10.firebasestorage.app",
+  messagingSenderId: "800054218295",
+  appId: "1:800054218295:web:c72da9e92cfb20124239b2",
+  measurementId: "G-WZF9XBTVTR"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.db = db;
+
+console.log("Firebase bağlandı 🚀");
+
+</script>
 </body>
 </html>
