@@ -254,11 +254,15 @@ signInWithEmailAndPassword
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-getFirestore,
-collection,
-addDoc
+  getFirestore,
+  collection,
+  addDoc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+ 
+ window.collection = collection;
+window.addDoc = addDoc;
+ 
 const firebaseConfig = {
   apiKey: "AIzaSyDPvUaP5Kn3jx4_IoNuOMopiR18n8NIGsU",
   authDomain: "t10v10.firebaseapp.com",
@@ -270,14 +274,20 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
- const auth = getAuth(app);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 window.auth = auth;
-window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-window.signInWithEmailAndPassword = signInWithEmailAndPassword;
- 
 window.db = db;
+
+window.collection = collection;
+window.addDoc = addDoc;
+
+window.createUserWithEmailAndPassword =
+createUserWithEmailAndPassword;
+
+window.signInWithEmailAndPassword =
+signInWithEmailAndPassword;
 
 console.log("Firebase bağlandı 🚀");
 
