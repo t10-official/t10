@@ -96,6 +96,8 @@ error.message;
 
 }
 
+}
+
 async function loginUser(){
 
 const email =
@@ -118,7 +120,7 @@ document.getElementById("loginMessage").innerText =
 document.getElementById("loginBox").style.display =
 "none";
 
-document.getElementById("mainApp").style.display =
+document.getElementById("cards").style.display =
 "flex";
 
 }catch(error){
@@ -129,38 +131,109 @@ document.getElementById("loginMessage").innerText =
 }
 
 }
+
 function logoutUser(){
- cards.style.display='none';
- loginBox.style.display='block';
+
+document.getElementById("cards").style.display =
+"none";
+
+document.getElementById("loginBox").style.display =
+"block";
+
 }
+
 function togglePanel(id){
- const p=document.getElementById(id);
- p.classList.toggle('hidden');
+
+const p =
+document.getElementById(id);
+
+p.classList.toggle("hidden");
+
 }
+
 function setMood(m){
- localStorage.setItem('t10Mood',m);
- moodResult.innerText='Bugünkü ruh halin: '+m;
+
+localStorage.setItem("t10Mood",m);
+
+document.getElementById("moodResult").innerText =
+"Bugünkü ruh halin: " + m;
+
 }
+
 function saveStudy(){
- let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
- arr.unshift({d:new Date().toLocaleDateString('tr-TR'),h:hours.value,q:questions.value});
- localStorage.setItem('t10Records',JSON.stringify(arr));
- studyResult.innerText='Kaydedildi';
- loadHistory();
+
+let arr =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+arr.unshift({
+
+d:new Date().toLocaleDateString("tr-TR"),
+h:document.getElementById("hours").value,
+q:document.getElementById("questions").value
+
+});
+
+localStorage.setItem(
+"t10Records",
+JSON.stringify(arr)
+);
+
+document.getElementById("studyResult").innerText =
+"✅ Kaydedildi";
+
+loadHistory();
+
 }
+
 function loadHistory(){
- let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
- history.innerHTML=arr.map(x=>`<p>${x.d} - ${x.h} saat - ${x.q} soru</p>`).join('');
+
+let arr =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+document.getElementById("history").innerHTML =
+arr.map(x =>
+`<p>${x.d} - ${x.h} saat - ${x.q} soru</p>`
+).join("");
+
 }
+
 function showStats(){
- togglePanel('statsPanel');
- let arr=JSON.parse(localStorage.getItem('t10Records'))||[];
- let h=0,q=0;
- arr.forEach(x=>{h+=Number(x.h||0);q+=Number(x.q||0)});
- statsText.innerText=`Toplam Saat: ${h} | Toplam Soru: ${q} | Kayıt: ${arr.length}`;
+
+togglePanel("statsPanel");
+
+let arr =
+JSON.parse(localStorage.getItem("t10Records"))
+|| [];
+
+let h = 0;
+let q = 0;
+
+arr.forEach(x => {
+
+h += Number(x.h || 0);
+q += Number(x.q || 0);
+
+});
+
+document.getElementById("statsText").innerText =
+`Toplam Saat: ${h} | Toplam Soru: ${q} | Kayıt: ${arr.length}`;
+
 }
-function sendHelp(){ helpResult.innerText='Talep gönderildi'; }
-window.onload=loadHistory;
+
+function sendHelp(){
+
+document.getElementById("helpResult").innerText =
+"✅ Talep gönderildi";
+
+}
+
+window.onload = function(){
+
+loadHistory();
+
+};
 </script>
 <script type="module">
 
