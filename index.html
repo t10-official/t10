@@ -70,18 +70,64 @@ button{padding:10px 15px;border:none;border-radius:8px;background:#D4AF37;cursor
 </div>
 
 <script>
-function registerUser(){
- const u=username.value,p=password.value;
- localStorage.setItem('t10User',JSON.stringify({u,p}));
- loginMessage.innerText='Kayıt oluşturuldu';
+async function registerUser(){
+
+const email =
+document.getElementById("username").value;
+
+const password =
+document.getElementById("password").value;
+
+try{
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+document.getElementById("loginMessage").innerText =
+"✅ Firebase hesabı oluşturuldu.";
+
+}catch(error){
+
+document.getElementById("loginMessage").innerText =
+error.message;
+
 }
-function loginUser(){
- const u=username.value,p=password.value;
- const user=JSON.parse(localStorage.getItem('t10User'));
- if(user && user.u===u && user.p===p){
-   loginBox.style.display='none';
-   cards.style.display='flex';
- } else loginMessage.innerText='Bilgiler hatalı';
+
+async function loginUser(){
+
+const email =
+document.getElementById("username").value;
+
+const password =
+document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+document.getElementById("loginMessage").innerText =
+"✅ Giriş başarılı.";
+
+document.getElementById("loginBox").style.display =
+"none";
+
+document.getElementById("mainApp").style.display =
+"flex";
+
+}catch(error){
+
+document.getElementById("loginMessage").innerText =
+"❌ " + error.message;
+
+}
+
 }
 function logoutUser(){
  cards.style.display='none';
@@ -119,6 +165,12 @@ window.onload=loadHistory;
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+ import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -132,6 +184,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+ const auth = getAuth(app);
 const db = getFirestore(app);
 
 window.db = db;
