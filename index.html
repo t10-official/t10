@@ -102,13 +102,12 @@ console.log("Firebase hazır");
 </div>
 
 <script>
+<script>
+
 async function registerUser(){
 
-const email =
-document.getElementById("username").value;
-
-const password =
-document.getElementById("password").value;
+const email = document.getElementById("username").value;
+const password = document.getElementById("password").value;
 
 try{
 
@@ -132,11 +131,8 @@ error.message;
 
 async function loginUser(){
 
-const email =
-document.getElementById("username").value;
-
-const password =
-document.getElementById("password").value;
+const email = document.getElementById("username").value;
+const password = document.getElementById("password").value;
 
 try{
 
@@ -163,4 +159,48 @@ error.message;
 }
 
 }
-async function loginUser(){
+
+function logoutUser(){
+
+document.getElementById("cards").style.display =
+"none";
+
+document.getElementById("loginBox").style.display =
+"block";
+
+}
+
+function togglePanel(id){
+
+document.getElementById(id).classList.toggle("hidden");
+
+}
+
+function setMood(m){
+
+document.getElementById("moodResult").innerText =
+"Bugünkü ruh halin: " + m;
+
+}
+
+function saveStudy(){
+
+document.getElementById("studyResult").innerText =
+"Kaydedildi";
+
+}
+
+function sendHelp(){
+
+document.getElementById("helpResult").innerText =
+"Talep gönderildi";
+
+}
+
+function showStats(){
+
+document.getElementById("statsPanel").classList.toggle("hidden");
+
+}
+
+</script>
