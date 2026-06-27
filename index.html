@@ -16,6 +16,38 @@ button{padding:10px 15px;border:none;border-radius:8px;background:#D4AF37;cursor
 .hidden{display:none}
 </style>
 </head>
+  <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDPvUaP5Kn3jx4_IoNuOMopiR18n8NIGsU",
+  authDomain: "t10v10.firebaseapp.com",
+  projectId: "t10v10",
+  storageBucket: "t10v10.firebasestorage.app",
+  messagingSenderId: "800054218295",
+  appId: "1:800054218295:web:c72da9e92cfb20124239b2",
+  measurementId: "G-WZF9XBTVTR"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.auth = auth;
+window.createUserWithEmailAndPassword =
+createUserWithEmailAndPassword;
+window.signInWithEmailAndPassword =
+signInWithEmailAndPassword;
+
+console.log("Firebase hazır");
+</script>
 <body>
 
 <div class="logo">T10</div>
