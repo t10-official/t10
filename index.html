@@ -119,7 +119,7 @@ password
 );
 
 document.getElementById("loginMessage").innerText =
-"✅ Firebase hesabı oluşturuldu.";
+"✅ Kayıt başarılı";
 
 }catch(error){
 
@@ -130,4 +130,37 @@ error.message;
 
 }
 
+async function loginUser(){
+
+const email =
+document.getElementById("username").value;
+
+const password =
+document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+document.getElementById("loginMessage").innerText =
+"✅ Giriş başarılı";
+
+document.getElementById("loginBox").style.display =
+"none";
+
+document.getElementById("cards").style.display =
+"flex";
+
+}catch(error){
+
+document.getElementById("loginMessage").innerText =
+error.message;
+
+}
+
+}
 async function loginUser(){
